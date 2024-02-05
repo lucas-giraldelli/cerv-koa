@@ -1,4 +1,14 @@
 import { Context, Next } from 'koa';
+import { verify } from 'jsonwebtoken';
+import { config } from '../config';
+
+function jwtVerify(token: string) {
+  const public_key = `-----BEGIN PUBLIC KEY-----\n${config.tokenSecret}\n-----END PUBLIC KEY-----`;
+
+  return verify(token, public_key, {
+    algorithms: ['RS256'],
+  });
+}
 
 function authenticate() {
   return async function (ctx: Context, next: Next) {
@@ -7,6 +17,15 @@ function authenticate() {
       ctx.status = 401;
       ctx.throw(401, 'Unauthorized');
     } else {
+      let jwt;
+      try {
+        jwt = jwtVerify(token);
+      } catch (error) {
+        ctx.status = 401;
+        ctx.throw(401, 'Unauthorized');
+      }
+
+      ctx.state.userInfo = jwt;
       await next();
     }
   };
