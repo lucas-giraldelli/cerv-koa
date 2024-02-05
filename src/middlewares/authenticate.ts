@@ -1,7 +1,7 @@
-import { Context } from 'koa';
+import { Context, Next } from 'koa';
 
 function authenticate() {
-  return async function (ctx: Context, next: () => Promise<void>) {
+  return async function (ctx: Context, next: Next) {
     const token = ctx.header['authorization']?.split(' ')[1];
     if (token === undefined) {
       ctx.status = 401;
