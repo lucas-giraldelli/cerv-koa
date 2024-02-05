@@ -5,6 +5,8 @@ import { config } from '../config';
 function jwtVerify(token: string) {
   const public_key = `-----BEGIN PUBLIC KEY-----\n${config.tokenSecret}\n-----END PUBLIC KEY-----`;
 
+  console.log({ token, public_key });
+
   return verify(token, public_key, {
     algorithms: ['RS256'],
   });
@@ -22,7 +24,7 @@ function authenticate() {
         jwt = jwtVerify(token);
       } catch (error) {
         ctx.status = 401;
-        ctx.throw(401, 'Unauthorized');
+        ctx.throw(401, 'unauthorized');
       }
 
       ctx.state.userInfo = jwt;
