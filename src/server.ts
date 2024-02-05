@@ -4,6 +4,7 @@ import cors from 'koa2-cors';
 import logger from 'koa-logger';
 import healthcheckRoute from './routes/healthcheck';
 import { config } from './config';
+import authenticate from './middlewares/authenticate';
 
 const app = new Koa();
 
@@ -16,7 +17,7 @@ app.use(
   })
 );
 app.use(logger());
-
+app.use(authenticate());
 app.use(healthcheckRoute.routes());
 
 const server = app
