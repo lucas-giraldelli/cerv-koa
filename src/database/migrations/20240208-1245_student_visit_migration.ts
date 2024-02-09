@@ -5,9 +5,6 @@ export async function up(knex: Knex): Promise<void> {
     table.uuid('visit_id').primary();
     table.uuid('student_id');
     table.uuid('student_address_id');
-    table.foreign('student_id').references('student.id');
-    table.foreign('student_address_id').references('address.id');
-    table.foreign('visit_id').references('visit.id');
   });
 }
 

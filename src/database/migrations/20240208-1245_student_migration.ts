@@ -13,8 +13,6 @@ export async function up(knex: Knex): Promise<void> {
     table.string('allergy');
     table.uuid('address_id');
     table.uuid('level_id');
-    table.foreign('address_id').references('address.id');
-    table.foreign('level_id').references('level.id');
   });
 }
 
