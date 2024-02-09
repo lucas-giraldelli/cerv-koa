@@ -7,5 +7,5 @@ type Config = {
 
 export const config: Config = {
   port: process.env.PORT || '7654',
-  tokenSecret: process.env.TOKEN_SECRET || 'mySecret',
+  tokenSecret: process.env.TOKEN_SECRET || 'mySecret'
 };

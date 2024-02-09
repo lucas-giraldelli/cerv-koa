@@ -2,7 +2,7 @@ import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import cors from 'koa2-cors';
 import logger from 'koa-logger';
-import healthcheckRoute from './routes/healthcheck';
+import routes from './routes/';
 import { config } from './config';
 import authenticate from './middlewares/authenticate';
 
@@ -13,12 +13,12 @@ const PORT = config.port;
 app.use(bodyParser());
 app.use(
   cors({
-    origin: '*',
+    origin: '*'
   })
 );
 app.use(logger());
 app.use(authenticate());
-app.use(healthcheckRoute.routes());
+app.use(routes.routes());
 
 const server = app
   .listen(PORT, async () => {
