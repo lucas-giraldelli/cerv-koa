@@ -3,10 +3,8 @@ import { Knex } from 'knex';
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('attendance', function (table) {
     table.uuid('id').primary();
-    table.uuid('student_id');
-    table.uuid('student_address_id');
-    table.foreign('student_id').references('student.id');
-    table.foreign('student_address_id').references('address.id');
+    table.date('date');
+    table.string('description', 500);
   });
 }
 
