@@ -1,16 +1,16 @@
 const configuration = {
   development: {
-    client: "mysql",
+    client: 'mysql',
     connection: {
-      host: "localhost",
-      user: "root",
-      password: "root",
-      database: "cerv-infancia",
+      host: 'localhost',
+      user: 'root',
+      password: 'root',
+      database: 'cerv-infancia',
       port: 3306, // MySQL default port
-      timezone: "UTC"
+      timezone: 'UTC'
     },
     migrations: {
-      directory: "./src/database/migrations"
+      directory: './src/database/migrations'
     },
     useNullAsDefault: true
   }

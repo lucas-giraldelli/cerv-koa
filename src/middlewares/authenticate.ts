@@ -5,8 +5,6 @@ import { config } from '../config';
 function jwtVerify(token: string) {
   const publicKey = `-----BEGIN PUBLIC KEY-----\n${config.tokenSecret}\n-----END PUBLIC KEY-----`;
 
-  console.log({ token, publicKey });
-
   return verify(token, publicKey, {
     algorithms: ['RS256']
   });
