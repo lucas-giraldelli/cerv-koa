@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes';
 import { Context } from 'koa';
 
 async function healthcheck(ctx: Context) {
@@ -5,7 +6,7 @@ async function healthcheck(ctx: Context) {
 
   try {
     ctx.body = {
-      status: 'success',
+      status: StatusCodes.OK,
       data: 'pong'
     };
   } catch (err) {
