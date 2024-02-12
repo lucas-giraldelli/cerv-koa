@@ -1,18 +1,19 @@
-import { ContextRouter } from '../interfaces/ContextRouter';
+import { ContextRouter } from '../../interfaces/ContextRouter';
 import { StatusCodes } from 'http-status-codes';
 
-import connection from '../database/connect';
-import Address from '../models/Address.model';
+import connection from '../../database/connect';
+import Address from '../../models/Address.model';
 import omit from 'lodash/omit';
-import { FIRST_INDEX } from '../constants/General.constants';
+import { FIRST_INDEX } from '../../constants/General.constants';
+import Level from '../../models/Level.model';
 
 async function getAll(ctx: ContextRouter) {
-  const addresses: Address[] = await connection('address').select('*');
+  const levels: Level[] = await connection('level').select('*');
 
   try {
     ctx.body = {
       status: StatusCodes.OK,
-      data: addresses
+      data: levels
     };
   } catch (err) {
     console.error(err);
@@ -20,24 +21,18 @@ async function getAll(ctx: ContextRouter) {
 }
 
 async function create(ctx: ContextRouter) {
-  const { street, number, neighborhood, complement, zip_code } = <Address>(
+  const { number, class_name, evangelist_id, attendance_id } = <Level>(
     ctx.request.body
   );
 
-  const address = new Address(
-    street,
-    number,
-    neighborhood,
-    complement,
-    zip_code
-  );
+  const level = new Level(number, class_name, evangelist_id, attendance_id);
 
-  await connection('address').insert(address);
+  await connection('level').insert(level);
 
   try {
     ctx.body = {
       status: StatusCodes.OK,
-      data: address
+      data: level
     };
   } catch (err) {
     console.error(err);
@@ -59,10 +54,10 @@ async function getOne(ctx: ContextRouter) {
   }
 }
 
-const address = {
+const level = {
   getAll,
   create,
   getOne
 };
 
-export default address;
+export default level;
