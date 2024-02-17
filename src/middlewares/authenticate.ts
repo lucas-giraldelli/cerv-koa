@@ -1,6 +1,6 @@
 import { Context, Next } from 'koa';
 import { verify } from 'jsonwebtoken';
-import { config } from '../config';
+import { config } from '../config/serverConfig';
 import { StatusCodes } from 'http-status-codes';
 import { AUTHORIZATION, BEARER } from '../constants/General.constants';
 

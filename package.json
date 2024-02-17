@@ -47,6 +47,7 @@
   "scripts": {
     "migrate": "npx ts-node ./node_modules/.bin/knex migrate:latest",
     "rollback": "npx ts-node ./node_modules/.bin/knex migrate:rollback",
+    "seed": "npx ts-node ./node_modules/.bin/knex seed:run",
     "build": "tsc --build",
     "start": "ts-node-dev src/server.ts",
     "test": "NODE_ENV=test PORT=7788 jest",
