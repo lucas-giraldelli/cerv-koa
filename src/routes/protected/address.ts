@@ -19,10 +19,8 @@ async function getAll(ctx: ContextRouter) {
   }
 }
 
-async function create(ctx: ContextRouter) {
-  const { street, number, neighborhood, complement, zip_code } = <Address>(
-    ctx.request.body
-  );
+export async function insertAddress(addr: Address) {
+  const { street, number, neighborhood, complement, zip_code } = addr;
 
   const address = new Address(
     street,
@@ -33,6 +31,13 @@ async function create(ctx: ContextRouter) {
   );
 
   await connection('address').insert(address);
+
+  return address;
+}
+
+async function create(ctx: ContextRouter) {
+  const body = <Address>ctx.request.body;
+  const address = await insertAddress(body);
 
   try {
     ctx.body = {
