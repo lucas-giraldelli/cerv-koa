@@ -17,7 +17,7 @@ async function create(ctx: ContextRouter) {
     teij_course,
     local_class,
     student,
-    student_course
+    student_course_id
   } = <Evangelist>ctx.request.body;
 
   if (!address) {
@@ -36,7 +36,7 @@ async function create(ctx: ContextRouter) {
     teij_course,
     local_class,
     student,
-    student_course
+    student_course_id
   );
 
   await connection('evangelist').insert(evangelist);

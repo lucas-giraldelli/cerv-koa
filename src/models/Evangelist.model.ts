@@ -13,7 +13,7 @@ class Evangelist {
   teij_course: TINYINT | null;
   local_class: TINYINT | null;
   student: TINYINT | null;
-  student_course: string | null;
+  student_course_id: string | null;
   //group_id?: number | null;
 
   constructor(
@@ -25,7 +25,7 @@ class Evangelist {
     teij_course: TINYINT | null, // já fez o curso?
     local_class: TINYINT | null, // cerv ou paia?
     student: TINYINT | null,
-    student_course: string | null
+    student_course_id: string | null
     //group_id: number | null = null,
   ) {
     this.id = uuidv4();
@@ -37,7 +37,7 @@ class Evangelist {
     this.teij_course = teij_course;
     this.local_class = local_class;
     this.student = student;
-    this.student_course = student_course;
+    this.student_course_id = student_course_id;
     //this.group_id = group_id;
   }
 }
