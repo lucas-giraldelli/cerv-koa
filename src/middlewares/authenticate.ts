@@ -1,6 +1,8 @@
 import { Context, Next } from 'koa';
 import { verify } from 'jsonwebtoken';
 import { config } from '../config';
+import { StatusCodes } from 'http-status-codes';
+import { AUTHORIZATION, BEARER } from '../constants/General.constants';
 
 function jwtVerify(token: string) {
   const publicKey = `-----BEGIN PUBLIC KEY-----\n${config.tokenSecret}\n-----END PUBLIC KEY-----`;
@@ -12,17 +14,18 @@ function jwtVerify(token: string) {
 
 function authenticate() {
   return async function (ctx: Context, next: Next) {
-    const token = ctx.header['authorization']?.split(' ')[1];
-    if (!token) {
-      ctx.status = 401;
-      ctx.throw(401, 'Unauthorized');
+    const bearer = ctx.header[AUTHORIZATION]?.split(' ')[0];
+    const token = ctx.header[AUTHORIZATION]?.split(' ')[1];
+    if (!token || bearer !== BEARER) {
+      ctx.status = StatusCodes.UNAUTHORIZED;
+      ctx.throw(StatusCodes.UNAUTHORIZED, 'Unauthorized');
     } else {
       let jwt;
       try {
         jwt = jwtVerify(token);
       } catch (error) {
-        ctx.status = 401;
-        ctx.throw(401, 'Unauthorized');
+        ctx.status = StatusCodes.UNAUTHORIZED;
+        ctx.throw(StatusCodes.UNAUTHORIZED, 'Unauthorized');
       }
 
       ctx.state.userInfo = jwt;

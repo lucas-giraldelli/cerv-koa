@@ -1,10 +1,10 @@
-import { ContextRouter } from '../interfaces/ContextRouter';
+import { ContextRouter } from '../../interfaces/ContextRouter';
 import { StatusCodes } from 'http-status-codes';
 
-import connection from '../database/connect';
-import Address from '../models/Address.model';
+import connection from '../../database/connect';
+import Address from '../../models/Address.model';
 import omit from 'lodash/omit';
-import { FIRST_INDEX } from '../constants/General.constants';
+import { FIRST_INDEX } from '../../constants/General.constants';
 
 async function getAll(ctx: ContextRouter) {
   const addresses: Address[] = await connection('address').select('*');
@@ -19,10 +19,8 @@ async function getAll(ctx: ContextRouter) {
   }
 }
 
-async function create(ctx: ContextRouter) {
-  const { street, number, neighborhood, complement, zip_code } = <Address>(
-    ctx.request.body
-  );
+export async function insertAddress(addr: Address) {
+  const { street, number, neighborhood, complement, zip_code } = addr;
 
   const address = new Address(
     street,
@@ -33,6 +31,13 @@ async function create(ctx: ContextRouter) {
   );
 
   await connection('address').insert(address);
+
+  return address;
+}
+
+async function create(ctx: ContextRouter) {
+  const body = <Address>ctx.request.body;
+  const address = await insertAddress(body);
 
   try {
     ctx.body = {
