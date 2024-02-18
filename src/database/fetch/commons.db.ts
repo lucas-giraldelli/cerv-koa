@@ -3,9 +3,8 @@ import omit from 'lodash/omit';
 import { FIRST_INDEX } from '../../constants/General.constants';
 import { ContextRouter } from '../../interfaces/ContextRouter';
 import connection from '../connect';
-import { CTXOBJ } from '../../constants/Types.contants';
 
-export async function getOne<T extends CTXOBJ>(
+export async function getOne<T extends {}>(
   ctx: ContextRouter,
   tablename: string
 ) {
@@ -23,7 +22,7 @@ export async function getOne<T extends CTXOBJ>(
   }
 }
 
-export async function getAll<T extends CTXOBJ>(
+export async function getAll<T extends {}>(
   ctx: ContextRouter,
   tablename: string
 ) {
