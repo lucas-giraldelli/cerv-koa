@@ -7,6 +7,7 @@ const courses = [
   { id: uuidv4(), name: 'Passe', type: 0 },
   { id: uuidv4(), name: 'Corrente Magnética', type: 0 },
   { id: uuidv4(), name: 'Vibração', type: 0 },
+  { id: uuidv4(), name: null, type: 0 },
   { id: uuidv4(), name: 'Noções Básicas da Evangelização Infantil', type: 1 },
   { id: uuidv4(), name: 'Trabalhando com a Criança', type: 1 },
   { id: uuidv4(), name: 'Reforma Íntima', type: 1 },
@@ -17,7 +18,8 @@ const courses = [
   { id: uuidv4(), name: 'O Bom Samaritano Infantil', type: 1 },
   { id: uuidv4(), name: 'Direção', type: 1 },
   { id: uuidv4(), name: 'Libertação', type: 1 },
-  { id: uuidv4(), name: 'Tormento da Obsessão', type: 1 }
+  { id: uuidv4(), name: 'Tormento da Obsessão', type: 1 },
+  { id: uuidv4(), name: null, type: 1 }
 ];
 
 export async function seed(knex: Knex): Promise<void> {
