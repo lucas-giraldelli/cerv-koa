@@ -1,3 +1,4 @@
+import Router from '@koa/router';
 import { StatusCodes } from 'http-status-codes';
 import { Context } from 'koa';
 
@@ -14,4 +15,6 @@ async function healthcheck(ctx: Context) {
   }
 }
 
-export default healthcheck;
+const routes = new Router();
+
+export default routes.get('/ping', healthcheck);
