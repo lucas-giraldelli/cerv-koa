@@ -7,14 +7,15 @@ const protectedRoutes = new Router();
 
 /** Address routes */
 protectedRoutes.get('/address', address.getAll);
-protectedRoutes.post('/address', address.create);
 protectedRoutes.get('/address/:id', address.getOne);
 
 /** Level routes  */
-protectedRoutes.get('/level', level.getAll);
 protectedRoutes.post('/level', level.create);
+protectedRoutes.get('/level', level.getAll);
 
 /** Evangelist routes */
 protectedRoutes.post('/evangelist', evangelist.create);
+protectedRoutes.get('/evangelist', evangelist.getAll);
+protectedRoutes.get('/evangelist/:id', evangelist.getOne);
 
 export default protectedRoutes;

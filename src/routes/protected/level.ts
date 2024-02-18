@@ -2,23 +2,8 @@ import { ContextRouter } from '../../interfaces/ContextRouter';
 import { StatusCodes } from 'http-status-codes';
 
 import connection from '../../database/connect';
-import Address from '../../models/Address.model';
-import omit from 'lodash/omit';
-import { FIRST_INDEX } from '../../constants/General.constants';
 import Level from '../../models/Level.model';
-
-async function getAll(ctx: ContextRouter) {
-  const levels: Level[] = await connection('level').select('*');
-
-  try {
-    ctx.body = {
-      status: StatusCodes.OK,
-      data: levels
-    };
-  } catch (err) {
-    console.error(err);
-  }
-}
+import { getAll } from '../../database/fetch/commons.db';
 
 async function create(ctx: ContextRouter) {
   const { number, class_name, evangelist_id, attendance_id } = <Level>(
@@ -39,25 +24,9 @@ async function create(ctx: ContextRouter) {
   }
 }
 
-async function getOne(ctx: ContextRouter) {
-  const address: Address[] = await connection('address').where({
-    id: ctx.params.id
-  });
-
-  try {
-    ctx.body = {
-      status: StatusCodes.OK,
-      data: omit(address[FIRST_INDEX], 'id')
-    };
-  } catch (err) {
-    console.error(err);
-  }
-}
-
 const level = {
-  getAll,
   create,
-  getOne
+  getAll: (ctx: ContextRouter) => getAll<Level>(ctx, 'level')
 };
 
 export default level;

@@ -2,10 +2,9 @@ import { ContextRouter } from '../../interfaces/ContextRouter';
 import { StatusCodes } from 'http-status-codes';
 
 import connection from '../../database/connect';
-import omit from 'lodash/omit';
-import Address from '../../models/Address.model';
 import Evangelist from '../../models/Evangelist.model';
 import { insertAddress } from './address';
+import { getAll, getOne } from '../../database/fetch/commons.db';
 
 async function create(ctx: ContextRouter) {
   const {
@@ -52,7 +51,9 @@ async function create(ctx: ContextRouter) {
 }
 
 const evangelist = {
-  create
+  create,
+  getAll: (ctx: ContextRouter) => getAll<Evangelist>(ctx, 'evangelist'),
+  getOne: (ctx: ContextRouter) => getOne<Evangelist>(ctx, 'evangelist')
 };
 
 export default evangelist;
