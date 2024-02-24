@@ -53,7 +53,8 @@ async function create(ctx: ContextRouter) {
 const evangelist = {
   create,
   getAll: (ctx: ContextRouter) => getAll<Evangelist>(ctx, 'evangelist'),
-  getOne: (ctx: ContextRouter) => getOne<Evangelist>(ctx, 'evangelist')
+  getOne: (ctx: ContextRouter) =>
+    getOne<Evangelist>(ctx, 'evangelist', 'address')
 };
 
 export default evangelist;
