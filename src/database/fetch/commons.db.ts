@@ -3,36 +3,48 @@ import omit from 'lodash/omit';
 import { FIRST_INDEX } from '../../constants/General.constants';
 import { ContextRouter } from '../../interfaces/ContextRouter';
 import connection from '../connect';
-import { CTXOBJ } from '../../constants/Types.contants';
+import { omitId } from '../../utils/utilFunctions';
 
-export async function getOne<T extends CTXOBJ>(
+export async function getOne<T extends {}>(
   ctx: ContextRouter,
-  tablename: string
+  tableName: string,
+  joinTable: any = undefined
 ) {
-  const data: T[] = await connection(tablename).where({
-    id: ctx.params.id
-  });
+  let data: Array<T>;
+
+  if (joinTable) {
+    data = (await connection(tableName)
+      .from(`${tableName} as t`)
+      .where({
+        't.id': ctx.params.id
+      })
+      .join(`${joinTable} as jt`, `t.${joinTable}_id`, 'jt.id')) as Array<T>;
+  } else {
+    data = await connection(tableName).where({
+      id: ctx.params.id
+    });
+  }
 
   try {
     ctx.body = {
       status: StatusCodes.OK,
-      data: omit(data[FIRST_INDEX], 'id')
+      data: omitId<T>(data[FIRST_INDEX])
     };
   } catch (err) {
     console.error(err);
   }
 }
 
-export async function getAll<T extends CTXOBJ>(
+export async function getAll<T extends {}>(
   ctx: ContextRouter,
-  tablename: string
+  tableName: string
 ) {
-  const data: T[] = await connection(tablename).select('*');
+  const data: Array<T> = await connection(tableName).select('*');
 
   try {
     ctx.body = {
       status: StatusCodes.OK,
-      data: data
+      data: omitId<T>(data[FIRST_INDEX])
     };
   } catch (err) {
     console.error(err);
